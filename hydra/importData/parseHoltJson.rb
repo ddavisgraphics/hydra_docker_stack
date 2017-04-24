@@ -1,7 +1,4 @@
 #!/bin/env ruby
-
-ENV['RAILS_ENV'] = 'development' # Set to your desired Rails environment name
-require '../config/environment.rb'
 require 'nokogiri'
 require 'json'
 
@@ -15,84 +12,69 @@ class ParseHolt
     @objects = JSON.parse(json)
   end
 
+  # looks to see if a record is changed
   def changed?(db_object, object)
-    if db_object.collectionNumber != object.collectionNumber   ||
-       db_object.collectionName    != object.collectionName    ||
-       db_object.identifier        != object.identifier        ||
-       db_object.title             != object.title             ||
-       db_object.dateCreation      != object.dateCreation      ||
-       db_object.creator           != object.creator           ||
-       db_object.description       != object.description       ||
-       db_object.description2      != object.description2      ||
-       db_object.subject           != object.subject           ||
-       db_object.physicalsize      != object.physicalsize      ||
-       db_object.serieslocation    != object.serieslocation    ||
-       db_object.boxlocation       != object.boxlocation       ||
-       db_object.folderlocation    != object.folderlocation    ||
-       db_object.acquisitionMethod != object.acquisitionMethod
-     true
-    end
+    db_object != object ? true : false
   end
-
-  def changed?(db_object, object) 
-    true if db_object != object
-  end 
-
-  # def parse
-  #   # model = holt
-  #   @objects.each do |record|
-  #     # check to see if current record is new or already exists
-  #     #record_exists = Holt.find(:identifier=>record['identifier'])
-  #     # create new
-  #
-  #     record_exists = []
-  #
-  #     case record_exists.count
-  #     when 0
-  #       # Holt.create(
-  #       #   collectionNumber: record.collectionNumber,
-  #       #   collectionName: record.collectionName,
-  #       #   identifier: record.identifier,
-  #       #   title: record.title,
-  #       #   dateCreation: record.dateCreation,
-  #       #   creator: record.creator,
-  #       #   description: record.description,
-  #       #   description2: record.description2,
-  #       #   subject: record.subject,
-  #       #   physicalsize: record.physicalsize,
-  #       #   serieslocation: record.serieslocation,
-  #       #   boxlocation: record.boxlocation,
-  #       #   folderlocation: record.folderlocation,
-  #       #   acquisitionMethod: record.acquisitionMethod,
-  #       #   project: record.project )
-  #
-  #       puts record['identifier']
-  #     when 1
-  #       # holt_record = record_exists[0]
-  #       puts record.project << " test"
-  #     else
-  #       # Problem, We should only ever get a 0 or 1 back. if we get more
-  #       # than one back we have duplicate identifiers in the system. bad.
-  #       puts "Error: Duplicate identifiers #{record['identifier']}"
-  #       exit
-  #     end # end case
-  #   end # end block
-  # end  # end parse
 
   def parse
-    @objects.each do |object|
-      puts object['identifier']
-      if Holt.find(:identifier => object['identifier'])
-        puts "record exists"
+    @objects.each do |record|
+      # check to see if current record is new or already exists
+      record_exists = Holt.find(:identifier=>record['identifier'])
+      # case 
+      case record_exists.count
+      when 0
+        holt_image = Holt.create(
+          collectionNumber: record.collectionNumber,
+          collectionName: record.collectionName,
+          identifier: record.identifier,
+          title: record.title,
+          dateCreation: record.dateCreation,
+          creator: record.creator,
+          description: record.description,
+          description2: record.description2,
+          subject: record.subject,
+          physicalsize: record.physicalsize,
+          serieslocation: record.serieslocation,
+          boxlocation: record.boxlocation,
+          folderlocation: record.folderlocation,
+          acquisitionMethod: record.acquisitionMethod,
+          project: record.project 
+        )  
+      when 1
+        holt_image = record_exists[0]
+        if changed?(holt_image, record)
+          holt_image.collectionNumber = record.collectionNumber
+          holt_image.collectionName = record.collectionName
+          holt_image.identifier = record.identifier
+          holt_image.title = record.title
+          holt_image.dateCreation = record.dateCreation
+          holt_image.creator = record.creator
+          holt_image.description = record.description
+          holt_image.description2 = record.description2
+          holt_image.subject = record.subject
+          holt_image.physicalsize = record.physicalsize
+          holt_image.serieslocation = record.serieslocation
+          holt_image.boxlocation = record.boxlocation
+          holt_image.folderlocation = record.folderlocation
+          holt_image.acquisitionMethod = record.acquisitionMethod
+        end
       else
-        puts "record does NOT exist"
-      end
-    end
-  end
-
+        # Problem, We should only ever get a 0 or 1 back. if we get more
+        # than one back we have duplicate identifiers in the system. bad.
+        abort "Error: Duplicate identifiers #{record['identifier']}"
+      end # end case
+    end # end block
+  end  # end parse
 end  # end class
 
+puts ' ----------------------------------------- '
+puts ' Parsing Import Now '
+puts ' ----------------------------------------- '
 
-parse_holt = ParseHolt.new('./dataFiles/data/holt-data.json')
-parse_holt.parse
-# puts parse.readfile
+parse_holt = ParseHolt.new('./importData/dataFiles/data/holt-data.json')
+parse_holt.parse 
+
+puts ' ----------------------------------------- '
+puts ' Import completed'
+puts ' ----------------------------------------- '

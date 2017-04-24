@@ -1,4 +1,4 @@
-FROM        solr:6.1.0-alpine
+FROM        solr:6.5-alpine
 MAINTAINER  David J. Davis <djdavis@mail.wvu.edu>
 ADD         ./config/schema.xml conf/
 ADD         ./config/solrconfig.xml conf/
