@@ -20,9 +20,7 @@ services:
       - solr-precreate
       - hydra
       - /opt/solr/conf
-    networks:
-      - backend
-
+  
   fedora:
     build: ./fcrepo
     container_name: fedora
@@ -30,8 +28,7 @@ services:
       - "8984:8984"
     volumes:
       - fcrepo:/opt/fcrepo/data
-    networks:
-      - backend
+ 
   db:
     image: mysql:5.7.16
     container_name: db
@@ -41,8 +38,7 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
     volumes:
       - mysql:/var/lib/mysql
-    networks:
-      - frontend
+  
   hydra:
     build: .
     container_name: hydratest
@@ -53,11 +49,3 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    networks:
-      - frontend
-      - backend
-
-
-networks:
-  frontend: 
-  backend:
