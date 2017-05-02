@@ -343,6 +343,7 @@ DEPENDENCIES
   jquery-rails
   listen
   mysql2 (>= 0.3.13, < 0.5)
+  nokogiri (~> 1.7, >= 1.7.1)
   rails
   rake
   rsolr (~> 1.0)

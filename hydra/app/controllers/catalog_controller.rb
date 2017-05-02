@@ -8,18 +8,22 @@ class CatalogController < ApplicationController
   # before_action :enforce_show_permissions, only: :show
 
   configure_blacklight do |config|
-   
-    ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
+  
     config.default_solr_params = {
-      qt: 'search',
-      rows: 10
+      :qf    => 'identifier_tei identifier_tesim collectionNumber_tesim collectionName_tesim title_tesim dateCreation_tesim creator_tesim description_tesim description2_tesim subject_tesim physicalsize_tesim serieslocation_tesim boxlocation_tesim folderlocation_tesim acquisitionMethod_tesim project_tesim',
+      :qt    => 'search',
+      :rows  => 12,
+      :facet => true
     }
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'title_tesim'
+    config.index.title_field        = 'title_tesim'
     config.index.display_type_field = 'has_model_ssim'
 
 
+    # solr fields that will be treated as facets by the blacklight application
+    # :show may be set to false if you don't want the facet to be drawn in the
+    # facet bar
     config.add_facet_field solr_name('creator', :facetable), :label => 'Creator', :limit => 10
     config.add_facet_field solr_name('subject', :facetable), :label => 'Subject', :limit => 10
     
@@ -56,12 +60,14 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name('folderlocation', :stored_searchable, type: :string), :label => 'Folder Location:'
     config.add_show_field solr_name('acquisitionMethod', :stored_searchable, type: :string), :label => 'Acquisition Method:'
 
+    # "fielded" search configuration. Used by pulldown among other places.
+    # For supported keys in hash, see rdoc for Blacklight::SearchFields
+   
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
 
     config.add_search_field 'all_fields', :label => 'All Fields'
-
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
@@ -172,5 +178,4 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
   end
-
 end
