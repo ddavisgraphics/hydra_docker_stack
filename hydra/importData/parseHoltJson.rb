@@ -22,10 +22,10 @@ class ParseHolt
     str.split('|||')
   end
 
-  # file exists? 
-  def file_exists?(file_path)
-    
-  end 
+  # mime type
+  def mime_type(filename)
+    MIME::Types.type_for("#{filename}").first.content_type
+  end
 
   # parse that stuff 
   def parse
@@ -33,8 +33,11 @@ class ParseHolt
     @objects.each do |record|
       project = ['holt']
       base_path = 'importData/dataFiles'
-      image_path = "#{base_path}/jpg/#{record['identifier']}.jpg"
-      thumb_path = "#{base_path}/thumbs/#{record['identifier']}.jpg"
+
+      filename = "#{record['identifier']}.jpg"
+      image_path = "#{base_path}/jpg/#{filename}"
+      thumb_path = "#{base_path}/thumbs/#{filename}"
+      
       subjects =  split_subjects record['subject']
       record_exists = Holt.where(identifier: record['identifier'])
 
@@ -74,7 +77,7 @@ class ParseHolt
         holt_image.to_solr
         message_bit = 1
       when 1
-        holt_image = record_exists[0]
+        holt_image = record_exists.first
         if changed?(holt_image, record)
           holt_image.collectionNumber = record['collectionNumber']
           holt_image.collectionName = record['collectionName']
@@ -91,15 +94,25 @@ class ParseHolt
           holt_image.folderlocation = record['folderlocation']
           holt_image.acquisitionMethod = record['acquisitionMethod']
           holt_image.project = project
+
+          if File.exists?(image_path) 
+            primary_file = holt_image.build_image_file
+            primary_file.content = File.open(image_path)
+          end
+
+          if File.exists?(thumb_path) 
+            thumb_file = holt_image.build_thumbnail_file
+            thumb_file.content = File.open(thumb_path)
+          end
         end
+        holt_image.save
+        holt_image.to_solr
         message_bit = 2
       else
         # Problem, We should only ever get a 0 or 1 back. if we get more
         # than one back we have duplicate identifiers in the system. bad.
         abort "Error: Duplicate identifiers #{record['identifier']}"
       end # end case
-      holt_image.save
-      holt_image.to_solr
     end # end block
     Feedback.message message_bit
   end  # end parse
@@ -127,7 +140,7 @@ puts ' ----------------------------------------- '
 puts ' Parsing Import Now '
 puts ' ----------------------------------------- '
 
-parse_holt = ParseHolt.new('./importData/dataFiles/data/holt-data-single.json')
+parse_holt = ParseHolt.new('./importData/dataFiles/data/holt-data.json')
 puts parse_holt.parse
 
 puts ' ----------------------------------------- '
