@@ -1,4 +1,5 @@
 class Holt < ActiveFedora::Base
+  include Hydra::AccessControls::Permissions
   # title
   property :title, predicate: ::RDF::Vocab::DC.title, multiple: false do |index|
     index.as :stored_searchable # this produces the _tesim suffix

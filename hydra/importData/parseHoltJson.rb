@@ -59,6 +59,7 @@ class ParseHolt
         holt_image.folderlocation = record['folderlocation']
         holt_image.acquisitionMethod = record['acquisitionMethod']
         holt_image.project = project
+        holt_image.read_groups = ['public']
         holt_image.save!
 
         files = holt_image.files.build
@@ -72,7 +73,7 @@ class ParseHolt
           thumb_file = holt_image.build_thumbnail_file
           thumb_file.content = File.open(thumb_path)
         end
-
+        
         holt_image.save!
         holt_image.to_solr
         message_bit = 1
@@ -94,6 +95,7 @@ class ParseHolt
           holt_image.folderlocation = record['folderlocation']
           holt_image.acquisitionMethod = record['acquisitionMethod']
           holt_image.project = project
+          holt_image.read_groups = ['public']
 
           if File.exists?(image_path) 
             primary_file = holt_image.build_image_file
