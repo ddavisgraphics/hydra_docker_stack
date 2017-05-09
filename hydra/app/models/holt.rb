@@ -2,69 +2,71 @@ class Holt < ActiveFedora::Base
   include Hydra::AccessControls::Permissions
   # title
   property :title, predicate: ::RDF::Vocab::DC.title, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :stored_sortable, :facetable
   end
 
   # identifier
   property :identifier, predicate: ::RDF::Vocab::DC.identifier, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :stored_sortable, :facetable
   end
 
   # dateCreation
   property :dateCreation, predicate: ::RDF::Vocab::DC.date, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :stored_sortable, :facetable
   end
 
   # creator 
   property :creator, predicate: ::RDF::Vocab::DC.creator, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :stored_sortable, :facetable
   end
 
   # descriptions 
   property :description, predicate: ::RDF::Vocab::DC.description, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.type :text
+    index.as :stored_searchable
   end
 
-  property :description2, predicate: ::RDF::Vocab::DC.description, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+  property :description2, predicate: ::RDF::Vocab::DC.abstract, multiple: false do |index|
+    index.type :text
+    index.as :stored_searchable
   end
 
   # subjects
   property :subject, predicate: ::RDF::Vocab::DC.subject, multiple: true do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
 
   # source
   property :acquisitionMethod, predicate: ::RDF::Vocab::DC.accrualMethod, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
 
   property :collectionName, predicate: ::RDF::Vocab::DC.alternative, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
   
   property :collectionNumber, predicate: ::RDF::Vocab::DC.source, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
   
   property :physicalsize, predicate: ::RDF::Vocab::DC.format, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
   
   property :serieslocation, predicate: ::RDF::Vocab::DC.source, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
   
   property :boxlocation, predicate: ::RDF::Vocab::DC.source, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
   
   property :folderlocation, predicate: ::RDF::Vocab::DC.source, multiple: false do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
   
   property :project, predicate: ::RDF::Vocab::DC.isPartOf, multiple: true do |index|
-    index.as :stored_searchable # this produces the _tesim suffix
+    index.as :stored_searchable, :facetable
   end
 
   # reference from mgiarlo and jconyne on hydra slack 

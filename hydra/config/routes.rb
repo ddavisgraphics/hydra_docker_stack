@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  get "imageviewer/:id/:type" => "imageviewers#index"
   
   mount Blacklight::Engine => '/'
   root to: "catalog#index"

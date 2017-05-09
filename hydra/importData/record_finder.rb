@@ -12,7 +12,7 @@ class ParseRecord
   # record
   def record
     holt_record = Holt.where(identifier: @record_id).first
-    holt_record.image_file
+    holt_record.thumbnail_file.content
  end
 end
 

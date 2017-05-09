@@ -29,7 +29,6 @@ class CatalogController < ApplicationController
     config.index.title_field        = 'title_tesim'
     config.index.display_type_field = 'has_model_ssim'
 
-
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     # :show may be set to false if you don't want the facet to be drawn in the
@@ -92,132 +91,122 @@ class CatalogController < ApplicationController
     # case for a BL "search field", which is really a dismax aggregate
     # of Solr search fields.
 
-    # config.add_search_field('collectionNumber') do |field|
-    #   field.solr_local_parameters = {
-    #     :qf=>"$qf_collectionNumber",
-    #     :pf=>"$pf_collectionNumber"
-    #   }
-    # end
-
-    # config.add_search_field('collectionName') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$collectionName_qf',
-    #     pf: '$collectionName_pf'
-    #   }
-    # end
-
-    # config.add_search_field('identifier') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$identifier_qf',
-    #     pf: '$identifier_pf'
-    #   }
-    # end
-
-    config.add_search_field('title') do |field|
-      field.solr_parameters = { :'spellcheck.dictionary' => 'title' }
-      field.solr_local_parameters = { 
-        :qf => '$title_qf',
-        :pf => '$title_pf'
+    config.add_search_field('identifier') do |field|
+      identifier_field = Solrizer.solr_name("identifier", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: identifier_field,
+        pf: identifier_field
       }
     end
 
     config.add_search_field('subject') do |field|
-      field.solr_parameters = { :'spellcheck.dictionary' => 'subject' }
+      subject_field = Solrizer.solr_name("subject", :stored_searchable)
       field.solr_local_parameters = { 
-        :qf => '$subject_qf',
-        :pf => '$subject_pf'
+        qf: subject_field,
+        pf: subject_field
+      }
+    end
+
+    config.add_search_field('title') do |field|
+      title_field = Solrizer.solr_name("title", :stored_searchable)
+      field.solr_local_parameters = { 
+        qf: title_field,
+        pf: title_field
       }
     end
 
     config.add_search_field('description') do |field|
+      description_field = Solrizer.solr_name("description", :stored_searchable)
       field.solr_local_parameters = {
-        qf: '$description_qf',
-        pf: '$description_pf'
+        qf: description_field,
+        pf: description_field
       }
     end
 
+     config.add_search_field('creator') do |field|
+      creator_field = Solrizer.solr_name("creator", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: creator_field,
+        pf: creator_field
+      }
+    end
 
-    # config.add_search_field('identifier') do |field|
-    #   field.solr_parameters = { :'spellcheck.dictionary' => 'identifier' }
-    #   field.solr_local_parameters = { 
-    #     :qf => '$identifier_qf',
-    #     :pf => '$identifier_pf'
-    #   }
-    # end
+    config.add_search_field('dateCreation') do |field|
+      date_creation_field = Solrizer.solr_name("dateCreation", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: date_creation_field,
+        pf: date_creation_field
+      }
+    end
 
-    # config.add_search_field('dateCreation') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$dateCreation_qf',
-    #     pf: '$dateCreation_pf'
-    #   }
-    # end
+    config.add_search_field('collectionNumber') do |field|
+      collection_number = Solrizer.solr_name("collectionNumber", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: collection_number,
+        pf: collection_number
+      }
+    end
 
-    # config.add_search_field('creator') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$creator_qf',
-    #     pf: '$creator_pf'
-    #   }
-    # end
+    config.add_search_field('physical_size') do |field|
+      physicalsize_field = Solrizer.solr_name("physicalsize", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: physicalsize_field,
+        pf: physicalsize_field
+      }
+    end
 
-  
+    config.add_search_field('series_location') do |field|
+      serieslocation_field = Solrizer.solr_name("serieslocation", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: serieslocation_field,
+        pf: serieslocation_field
+      }
+    end
 
-    # config.add_search_field('subject') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$subject_qf',
-    #     pf: '$subject_pf'
-    #   }
-    # end
+    config.add_search_field('box_location') do |field|
+      boxlocation_field = Solrizer.solr_name("boxlocation", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: boxlocation_field,
+        pf: boxlocation_field
+      }
+    end
 
-    # config.add_search_field('physicalsize') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$physicalsize_qf',
-    #     pf: '$physicalsize_pf'
-    #   }
-    # end
+    config.add_search_field('folder_location') do |field|
+      folderlocation_field = Solrizer.solr_name("folderlocation", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: folderlocation_field,
+        pf: folderlocation_field
+      }
+    end
 
-    # config.add_search_field('serieslocation') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$serieslocation_qf',
-    #     pf:  '$serieslocation_pf'
-    #   }
-    # end
+    config.add_search_field('acquisition_method') do |field|
+      acquisition_method_field = Solrizer.solr_name("acquisitionMethod", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: acquisition_method_field,
+        pf: acquisition_method_field
+      }
+    end
 
-    # config.add_search_field('boxlocation') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$boxlocation_qf',
-    #     pf:  '$boxlocation_pf'
-    #   }
-    # end
-
-    # config.add_search_field('folderlocation') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$folderlocation_qf',
-    #     pf:  '$folderlocation_pf'
-    #   }
-    # end
-
-    # config.add_search_field('acquisitionMethod') do |field|
-    #   field.solr_local_parameters = {
-    #     qf: '$acquisitionMethod_qf',
-    #     pf:  '$acquisitionMethod_pf'
-    #   }
-    # end
+    sort_date = Solrizer.solr_name('dateCreation', :stored_sortable, type: :string)
+    sort_title = Solrizer.solr_name('title', :stored_sortable, type: :string)
+    sort_creator = Solrizer.solr_name('creator', :stored_sortable, type: :string)
+    sort_identifier = Solrizer.solr_name('identifier', :stored_sortable, type: :string)
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    # config.add_sort_field "identifier_ssi asc", :label => 'Identifier'
-    # config.add_sort_field "title_ssi asc", :label => 'Title'
-    # config.add_sort_field "dateCreation_ssi asc", :label => 'Date'
-    # config.add_sort_field "creator_ssi asc", :label => 'Creator'
-    # config.add_sort_field 'score desc, identifier_ssi asc', :label => 'relevance'
+    config.add_sort_field "#{sort_identifier} asc", :label => 'Identifier (asc)'
+    config.add_sort_field "#{sort_identifier} desc", :label => 'Identifier (desc)'
+    config.add_sort_field "#{sort_title} asc", :label => 'Title (A-Z)'
+    config.add_sort_field "#{sort_title} desc", :label => 'Title (Z-A)'
+    config.add_sort_field "#{sort_date} asc", :label => 'Date (newest first)'
+    config.add_sort_field "#{sort_creator} asc", :label => 'Creator (A-Z)'
+    config.add_sort_field "#{sort_creator} desc", :label => 'Creator (Z-A)'
+    config.add_sort_field "score desc, #{sort_identifier} asc", :label => 'Relevance'
 
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
     config.spell_max = 5
   end
-
-
-
 end
