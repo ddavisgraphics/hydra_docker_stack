@@ -1,9 +1,9 @@
 <% # container for a single doc -%>
 <div class="document <%= render_document_class document %>" itemscope itemtype="<%= document.itemtype %>">
 	<div class="document-wrap">
-		<a class="document-image" href="/imageviewer/<%# document.identifier %>/image">
-      <%# image_tag("/imageviewer/" + document.identifer + "/image") %>
-      <%= document.id %>
+    <% identifier = url_encode(document.id)%>
+		<a class="document-image" href="/imageviewer/<%= identifier %>/image">
+      <%= image_tag("/imageviewer/#{identifier}/image") %>
     </a>
 	  <%= render_document_partials document, blacklight_config.view_config(document_index_view_type).partials, :document_counter => document_counter %>
 		<div class="bookmark">
