@@ -153,41 +153,36 @@ html, body, form, nav, ul, div {
 			max-width: 100%;
 		}
 		.navbar-form {
-			margin: 0;
-			width: 100%;
-			float: right;
 			#search_field {
-				width: 35%;
-				float: left;
 				height: 35px;
+				max-width:100px;
 			}
 			.sr-only {
 				display: none;
 			}
-			.input-group {
-				display: inline-block;
-				float: left;
-				width: 65%;
-				height: 35px;
-				#q {
-					width: 50%;
-					display: inline-block;
-					float: left;
-					height: 35px;
+			.form-control { 
+				color:#333;
+				height:35px;
+			}
+			.input-group-addon {
+				padding:0; 
+				font-size: 14px;
+				font-weight: normal; 
+				line-height: 1; 
+				color: #333;
+				text-align: center; 
+				background-color: #eeeeee; 
+				border: 0; 
+				border-radius: 4px;
+				height:34px;
 				}
+			.input-group {
+				height: 35px;
 				.input-group-btn {
-					width: 50%;
-					display: inline-block;
-					float: left;
 					height: 35px;
 					.search-btn {
+						height:35px;
 						background: $primary-blue;
-					}
-					#search {
-						display: inline-block;
-						float: left;	
-						width: 100%;			
-						height: 35px;
 					}
 				}
 			}
@@ -495,10 +490,23 @@ html, body, form, nav, ul, div {
 			}
 		}
 	}
+
+	div#document { 
+		div { text-align: left; } 
+	}
+
 }
 
 /*********************************************************************
 	1024px and up
 **********************************************************************/
 @media screen and (min-width: 1024px) {
+}
+
+.full-size-responsive { 
+	width:100%; 
+	padding:20px; 
+	height:auto;
+	max-width:1000px;
+	text-align: center;
 }

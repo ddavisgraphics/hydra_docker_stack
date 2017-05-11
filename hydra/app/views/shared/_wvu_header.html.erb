@@ -1,11 +1,11 @@
 <!-- WVU Header -->
-  <div class="wvu-header mobile wvubottom">
-      <a href="#" id="wvutoggle" class="wvu-masthead__logo wvu-masthead__logo--w-signature">
-          <%= image_tag("wvulogo.svg", alt: "WVU Libraries") %>
+  <section class="wvu-header mobile wvubottom" role="banner" aria-label="wvu header for all university web pages">
+      <a href="#" id="wvutoggle" class="wvu-masthead__logo wvu-masthead__logo--w-signature" aria-expanded="false">
+          <%= image_tag("wvulogo.svg", alt: "WVU Libraries Logo") %>
           <i class="fa fa-chevron-down"></i>
           <i class="fa fa-chevron-up"></i>
       </a>
-      <ul class="list">
+      <ul class="list" role="navigation" aria-label="wvu header navigation">
           <li><a class="links" href="https://lib.wvu.edu/about/">About</a></li>
           <li><a class="links" href="https://lib.wvu.edu/collections/">Collections</a></li>
           <li><a class="links" href="https://lib.wvu.edu/instruction">Instruction</a></li>
@@ -15,13 +15,13 @@
           <li><a class="links" href="https://lib.wvu.edu/about/giving/">Give</a></li>
           <li><a class="links" href="https://lib.wvu.edu/">Library Home</a></li>
       </ul>
-  </div>
-  <div class="wvu-header tablet wvubottom">
+  </section>
+  <section class="wvu-header tablet wvubottom"  role="banner" aria-label="wvu header for all university web pages">
       <div class="wrap">
           <a href="https://lib.wvu.edu" class="wvu-header-logo wvu-masthead__logo wvu-masthead__logo--w-signature">
               <span class="wvu-masthead-title wvu-masthead__title--w-signature">Libraries</span>
           </a>
-          <ul class="wvu-header-mobile-list">
+          <ul class="wvu-header-mobile-list" role="navigation" aria-label="wvu header navigation">
               <li><a href="https://lib.wvu.edu/about/">About</a></li>
               <li><a href="https://lib.wvu.edu/collections/">Collections</a></li>
               <li><a href="https://lib.wvu.edu/instruction">Instruction</a></li>
@@ -31,4 +31,4 @@
               <li><a href="https://lib.wvu.edu/about/giving/">Give</a></li>
           </ul>
       </div>
-  </div>
+  </section>

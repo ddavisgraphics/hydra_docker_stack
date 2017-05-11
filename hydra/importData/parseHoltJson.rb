@@ -22,6 +22,21 @@ class ParseHolt
     str.split('|||')
   end
 
+  # remove special characters from description and abstract 
+  def remove_special_chars(str) 
+    temp = decode_html(str)
+    temp = temp.gsub(/ *\n/ , '')
+    temp = temp.gsub(/ *\r/, '')
+    temp = temp.gsub(/ *\t/ , ' ')
+    temp.to_s
+  end
+
+  # remove ascii character references for the actual character
+  def decode_html(str)
+    temp_string = Nokogiri::HTML.parse str
+    temp_string.text.to_s
+  end 
+
   # mime type
   def mime_type(filename)
     MIME::Types.type_for("#{filename}").first.content_type
@@ -40,6 +55,8 @@ class ParseHolt
       
       subjects =  split_subjects record['subject']
       record_exists = Holt.where(identifier: record['identifier'])
+      description1 = remove_special_chars(record['description'].to_s)
+      description2 = remove_special_chars(record['description2'].to_s)
 
       case record_exists.count
       when 0
@@ -50,8 +67,8 @@ class ParseHolt
         holt_image.title = record['title']
         holt_image.dateCreation = record['dateCreation']
         holt_image.creator = record['creator']
-        holt_image.description = record['description']
-        holt_image.description2 = record['description2']
+        holt_image.description = description1
+        holt_image.description2 = description2
         holt_image.subject = subjects
         holt_image.physicalsize = record['physicalsize']
         holt_image.serieslocation = record['serieslocation']

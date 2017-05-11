@@ -10,10 +10,21 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
+// Rails or Hydra Requirements 
+// -----------------------------------------------------
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks//
+//= require turbolinks
+
 // Required by Blacklight
+// -----------------------------------------------------
 //= require blacklight/blacklight
 
-//= require_tree .
+// CUSTOM COLLECTION JS 
+// -----------------------------------------------------
+//= require partials/equal_heights
+//= require partials/facets
+//= require partials/toggles
+//= require partials/smooth_scroll
+//= require partials/cookie_modal

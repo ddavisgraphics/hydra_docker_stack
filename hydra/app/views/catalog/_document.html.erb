@@ -1,9 +1,10 @@
 <% # container for a single doc -%>
 <div class="document <%= render_document_class document %>" itemscope itemtype="<%= document.itemtype %>">
 	<div class="document-wrap">
-    <% identifier = url_encode(document.id)%>
-		<a class="document-image" href="/imageviewer/<%= identifier %>/image">
-      <%= image_tag("/imageviewer/#{identifier}/image") %>
+    <% identifier = document[:identifier_ssi] %>
+		<% description = document[:description_tesim] %>
+		<a class="document-image" href="/catalog/<%= CGI.escape document.id%>">
+      <%= image_tag("/imageviewer/#{identifier}/image", title:"#{document[:title_ssi]}", alt:description) %>
     </a>
 	  <%= render_document_partials document, blacklight_config.view_config(document_index_view_type).partials, :document_counter => document_counter %>
 		<div class="bookmark">

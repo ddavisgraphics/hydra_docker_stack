@@ -3,10 +3,10 @@
   <div class="tbwrap">
       <div class="sticky-header-nav tabBar">
           <a id="menu-toggle">
-              <%= image_tag("menu.svg", alt: "Menu", id: "menu-toggle1") %>
-              <%= image_tag("x.svg", alt: "Menu", id: "menu-toggle2") %>
+              <%= image_tag("menu.svg", alt: "Menu Expand", id: "menu-toggle1") %>
+              <%= image_tag("x.svg", alt: "Menu Close", id: "menu-toggle2") %>
           </a>
-          <ul id="sticky-header-nav-menu">
+          <ul id="sticky-header-nav-menu" role="navigation">
               <li><a href="/"></i>Home</a></li>
               <li><a href="https://findingaids.lib.wvu.edu/cgi/f/findaid/findaid-idx?c=wvcguide&cc=wvcguide&type=simple&rgn=Collection+Title&q1=holt%2C+rush&Submit=Search"></i>Guides</a></li>
               <li><a href="https://wvrhc.lib.wvu.edu/services/"></i>Policies</a></li>                        
@@ -19,9 +19,9 @@
       </div>
       <div class="sticky-header-filter tabBar">
           <a id="facet-toggle">
-              <%= image_tag("filter.svg", alt: "Search", id:
+              <%= image_tag("filter.svg", alt: "Filter Search Expand", id:
               "filter-toggle1") %>
-              <%= image_tag("x.svg", alt: "Search", id:
+              <%= image_tag("x.svg", alt: "Close Filter", id:
               "filter-toggle2") %>
           </a>
           <div class="sticky-header-filter-sidebar">
@@ -29,10 +29,11 @@
       </div>
       <div class="sticky-header-search tabBar">
           <a id="search-toggle">
-              <%= image_tag("search.svg", alt: "Search", id: "search-toggle1") %>
-              <%= image_tag("x.svg", alt: "Search", id:
+              <%= image_tag("search.svg", alt: "Search Expand", id: "search-toggle1") %>
+              <%= image_tag("x.svg", alt: "Search Close", id:
               "search-toggle2") %>
           </a>
+
           <%= render_search_bar  %>
       </div>
   </div>
